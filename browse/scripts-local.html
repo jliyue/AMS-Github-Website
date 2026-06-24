@@ -1,70 +1,62 @@
-{% include_relative scripts-listeners.html %}
-
-<script>
-
-
-// Draws the browse table on the page.
-// It receives a list of works and turns them into HTML table rows.
-
-function displayBrowseTable(data, selector) {
-	let element = document.querySelector(selector || "#list");
-	if (!element) {
-		return;
-	}
-	let headings = [INDEX_composer, INDEX_title, INDEX_genre, INDEX_voice];
-	element.innerHTML = `
-		<table class="browse">
-			<thead>${makeTableHeader(headings)}</thead>
-			<tbody>${makeTableBody(headings, data)}</tbody>
-		</table>
-	`;
-}
-
-
-// Builds the header row for the browse table.
-// The headings array contains labels such as Composer, Title, Genre, and Voices.
-
-function makeTableHeader(headings) {
-	return `<tr><th>${headings.join("</th><th>")}</th></tr>`;
-}
-
-
-// Builds all of the body rows for the browse table.
-// Each work becomes one table row, and each metadata field becomes one table cell.
-
-function makeTableBody(headings, data) {
-	return data.map(function(entry) {
-		let cells = headings.map(function(heading) {
-			let value = entry[heading] || "";
-			let tdClass = heading.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase();
-			if (heading === INDEX_title) {
-				value = `<a href="${getScoreURL(entry)}">${getTitle(entry)}</a>`;
-			}
-			return `<td class="${tdClass}">${value}</td>`;
-		});
-		return `<tr>${cells.join("")}</tr>`;
-	}).join("");
-}
-
-
-// Combines the title and subtitle into the text shown in the browse table.
-// If a work has both, the subtitle is shown after a comma.
-
-function getTitle(entry) {
-	let title = entry.Title || "";
-	let subtitle = entry.Subtitle || "";
-	if (title && subtitle) {
-		return `${title}, <i>${subtitle}</i>`;
-	}
-	return title || subtitle;
-}
-
-
-// Creates the link from a browse-table title to the individual work page.
-// encodeURIComponent keeps special characters safe inside a URL.
-
-function getScoreURL(entry) {
-	return `{{ "/work/" | relative_url }}?id=${encodeURIComponent(entry.ID || "")}`;
-}
-
-</script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+    span.Apple-tab-span {white-space:pre}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function displayBrowseTable(data, selector) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>let element = document.querySelector(selector || "#list");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>if (!element) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>let headings = ["FILE_ID", "file_name", "FOLDER_PROVINCE", "relative_path", "raw_github_url"];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>element.innerHTML = `</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;p&gt;&lt;b&gt;${data.length}&lt;/b&gt; files loaded from metadata.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;table class="browse"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;thead&gt;${makeTableHeader(["ID", "File name", "Province", "Path", "File"])}&lt;/thead&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;tbody&gt;${makeTableBody(data)}&lt;/tbody&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;/table&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>`;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function makeTableHeader(headings) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>return `&lt;tr&gt;&lt;th&gt;${headings.join("&lt;/th&gt;&lt;th&gt;")}&lt;/th&gt;&lt;/tr&gt;`;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function makeTableBody(data) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>return data.map(function(entry) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>let id = entry.FILE_ID || "";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>let fileName = entry.file_name || "";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>let province = entry.FOLDER_PROVINCE || "";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>let path = entry.relative_path || "";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>let rawUrl = entry.raw_github_url || "";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>return `</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;td&gt;${id}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;td&gt;${fileName}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;td&gt;${province}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;td&gt;${path}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;td&gt;&lt;a target="_blank" href="${rawUrl}"&gt;raw file&lt;/a&gt;&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-tab-span">	</span>}).join("");</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+</body>
+</html>
